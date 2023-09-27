@@ -2,7 +2,7 @@
 const config = {
    // baseUrl: 'https://vue.ruoyi.vip/prod-api',
    //cloud后台网关地址
-   baseUrl: 'http://192.168.1.10:8080',
+   baseUrl: 'http://localhost:8080',
    clientID: '428a8310cd442757ae699df5d894f051',
    // 应用信息
    appInfo: {
