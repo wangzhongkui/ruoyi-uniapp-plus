@@ -6,7 +6,7 @@
 			<text class="title">移动端登录</text>
 		</view>
 		<view class="login-form-content">
-			<view class="input-item flex align-center">
+			<view class="input-item flex align-center"  v-if="tenantEnabled">
 				<view class="iconfont icon-friendfill icon"></view>
 				<select v-model="loginForm.tenantId"  class="downlist">
 					<option v-for="item in tenantList" :key="item.tenantId" :label="item.companyName" :value="item.tenantId"></option>
