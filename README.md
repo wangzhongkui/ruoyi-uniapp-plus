@@ -1,7 +1,7 @@
-# RuoYi-App-Geek
+# RuoYi-UniApp-Plus
 
 # 介绍
-
+* 本框架兼容狮子大佬RuoYi-Cloud-Plus 2.x,RuoYi-Vue-Plus 5.x
 * 本框架基于RuoYi-App框架二次修改，使用Uniapp+Vue3。
 * 同时支持js或者ts。
 * 同时支持css、scss、less
