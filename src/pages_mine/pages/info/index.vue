@@ -30,9 +30,10 @@ export default {
   methods: {
     getUser() {
       getUserProfile().then(response => {
-        this.user = response.data
-        this.roleGroup = response.roleGroup
-        this.postGroup = response.postGroup
+		  const data=response.data;
+        this.user = data.user
+        this.roleGroup = data.roleGroup
+        this.postGroup = data.postGroup
       })
     }
   }

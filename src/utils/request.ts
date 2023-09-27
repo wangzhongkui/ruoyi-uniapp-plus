@@ -7,13 +7,14 @@ import { RequestConfig, ResponseData } from '@/types/request'
 
 let timeout = 10000
 const baseUrl = config.baseUrl
-
+const clientId = config.clientID;
 const request = <T>(config:RequestConfig):Promise<ResponseData<T>> => {
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
   config.header = config.header || {}
   if (getToken() && !isToken) {
-    config.header['Authorization'] = 'Bearer ' + getToken()
+    config.header['Authorization'] = 'Bearer ' + getToken(),
+	config.header['clientid'] = clientId
   }
   // get请求映射params参数
   if (config.params) {

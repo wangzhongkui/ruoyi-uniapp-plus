@@ -3,9 +3,9 @@
     <view class="logo-content align-center justify-center flex">
       <image style="width: 100rpx;height: 100rpx;" :src="globalConfig.appInfo.logo" mode="widthFix">
       </image>
-      <text class="title">若依移动端登录</text>
+      <text class="title">移动端登录</text>
     </view>
-    <view class="login-form-content">
+    <view class="login-form-content"> 
       <view class="input-item flex align-center">
         <view class="iconfont icon-user icon"></view>
         <input v-model="loginForm.username" class="input" type="text" placeholder="请输入账号" maxlength="30" />
@@ -40,10 +40,12 @@ import { getCodeImg } from '@/api/login'
 import { ref } from "vue";
 import config from '@/config.js'
 import store from '@/store'
+// import { LoginData, TenantVO } from '@/api/types';
 const codeUrl = ref("");
 const captchaEnabled = ref(true);
 const globalConfig = ref(config);
 const loginForm = ref({
+  tenantId: '000000',
   username: "admin",
   password: "admin123",
   code: "",
@@ -53,10 +55,12 @@ const loginForm = ref({
 // 获取图形验证码
 function getCode() {
   getCodeImg().then(res => {
-    captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
+	const { data } = res;
+    captchaEnabled.value = data.captchaEnabled === undefined ? true : data.captchaEnabled;
+  //  captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
     if (captchaEnabled.value) {
-      codeUrl.value = 'data:image/gif;base64,' + res.img
-      loginForm.value.uuid = res.uuid
+      codeUrl.value = 'data:image/gif;base64,' + data.img
+      loginForm.value.uuid = data.uuid
     }
   })
 };

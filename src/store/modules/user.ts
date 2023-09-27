@@ -41,15 +41,16 @@ const user: Module<UserState, UserState> = {
   actions: {
     // 登录
     Login({ commit }, userInfo: UserForm) {
-      const username = userInfo.username
-      const password = userInfo.password
-      const code = userInfo.code
-      const uuid = userInfo.uuid
-      return new Promise((resolve, reject) => {
-        login(username, password, code, uuid).then((res: any) => {
-          setToken(res.token)
-          commit('SET_TOKEN', res.token)
-          resolve(res)
+      // const username = userInfo.username
+      // const password = userInfo.password
+      // const code = userInfo.code
+      // const uuid = userInfo.uuid
+      return new Promise((resolve, reject) => { 
+        login(userInfo).then((res: any) => {
+		  const data = res.data;
+          setToken(data.access_token)
+          commit('SET_TOKEN', data.access_token)
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -57,15 +58,16 @@ const user: Module<UserState, UserState> = {
     },
 
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then((res: any) => {
-          const user = res.user
-          const avatar = (user == null || user.avatar == "" || user.avatar == null) ? "@/static/images/profile.jpg" : baseUrl + user.avatar
+		const data=res.data;
+          const user = data.user
+          const avatar = (user == null || user.avatar == "" || user.avatar == null) ? "/static/images/profile.jpg" : baseUrl + user.avatar
           const username = (user == null || user.userName == "" || user.userName == null) ? "" : user.userName
-          if (res.roles && res.roles.length > 0) {
-            commit('SET_ROLES', res.roles)
-            commit('SET_PERMISSIONS', res.permissions)
+          if (data.roles && data.roles.length > 0) {
+            commit('SET_ROLES', data.roles)
+            commit('SET_PERMISSIONS', data.permissions)
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }

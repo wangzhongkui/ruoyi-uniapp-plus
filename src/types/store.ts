@@ -8,6 +8,7 @@ export interface UserState {
 }
 
 export interface UserForm {
+	tenantId: string
     username: string
     password: string
     code: string

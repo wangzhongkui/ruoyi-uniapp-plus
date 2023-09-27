@@ -1,22 +1,41 @@
 import request from '@/utils/request'
-
+import config from '@/config'
+// import { LoginData, LoginResult, VerifyCodeResult, TenantInfo } from '@/api/types';
+const clientId = config.clientID;
 // 登录方法
-export function login(username, password, code, uuid) {
-  const data = {
-    username,
-    password,
-    code,
-    uuid
-  }
+
+export function login(data) {
+  const params = {
+    ...data,
+    clientId: data.clientId || clientId,
+    grantType: data.grantType || 'password'
+  };
   return request({
-    url: '/login',
+    url: '/auth/login',
     headers: {
-      isToken: false
+      isToken: false,
+      isEncrypt: true
     },
     method: 'post',
-    data: data
-  })
+    data: params
+  });
 }
+// export function login(username, password, code, uuid) {
+//   const data = {
+//     username,
+//     password,
+//     code,
+//     uuid
+//   }
+//   return request({
+//     url: '/login',
+//     headers: {
+//       isToken: false
+//     },
+//     method: 'post',
+//     data: data
+//   })
+// }
 
 // 注册方法
 export function register(data) {
@@ -33,7 +52,7 @@ export function register(data) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/getInfo',
+    url: '/system/user/getInfo',
     method: 'get'
   })
 }
@@ -41,7 +60,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/logout',
+    url: '/auth/logout',
     method: 'post'
   })
 }
@@ -49,7 +68,7 @@ export function logout() {
 // 获取验证码
 export function getCodeImg() {
   return request({
-    url: '/captchaImage',
+    url: '/auth/code',
     headers: {
       isToken: false
     },
